@@ -75,7 +75,7 @@ contract Hamid is IERC20{
      function allowance(address tokenOwner, address spender) public view virtual override returns (uint256) {
         return _allowances[tokenOwner][spender]; 
     }
-     uint tokenPrice = 1*10**16;
+     uint tokenPrice = 1*10**18;
       
       function viewPrice() public view returns(uint, string memory){
           return(tokenPrice, "Wei");
