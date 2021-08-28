@@ -75,4 +75,28 @@ contract Hamid is IERC20{
      function allowance(address tokenOwner, address spender) public view virtual override returns (uint256) {
         return _allowances[tokenOwner][spender]; 
     }
+     uint tokenPrice = 1*10**16;
+      
+      function viewPrice() public view returns(uint, string memory){
+          return(tokenPrice, "Wei");
+      }
+      
+      
+      function setPrice(uint newPrice) public  returns(uint){
+          tokenPrice = newPrice;
+          return(tokenPrice);
+      }
+      
+      function buyToken() payable public returns(uint, string memory){
+          require(msg.value > 0, "You have not specified any amount for investment.");
+          uint Investment = msg.value;
+          uint tokenQty = Investment / tokenPrice;
+          _balances[owner] -= tokenQty * 1e18;
+          _balances[msg.sender] += tokenQty * 1e18;
+          return(tokenQty, "MNC tokens transferred to your account.");
+      }  
+      
+      receive () external payable{
+          buyToken();
+      }   
 }
